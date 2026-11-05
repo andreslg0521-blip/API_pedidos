@@ -63,6 +63,15 @@ function crearApp(claveApi) {
       return responder(res, 201, nuevo);
     }
 
+    // 5. Eliminar un pedido
+    if (metodo === "DELETE" && url.startsWith("/pedidos/")) {
+      const id = Number(url.split("/")[2]);
+      const posicion = pedidos.findIndex((p) => p.id === id);
+      if (posicion === -1) return responder(res, 404, { error: "Pedido no encontrado" });
+      pedidos.splice(posicion, 1);
+      return responder(res, 200, { mensaje: "Pedido eliminado" });
+    }
+
     responder(res, 404, { error: "Ruta no encontrada" });
   });
 }
